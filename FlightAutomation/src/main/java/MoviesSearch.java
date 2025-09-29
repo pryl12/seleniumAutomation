@@ -17,14 +17,14 @@ public class MoviesSearch {
         boolean nolan = movies.stream().anyMatch(m -> m.searchByKeyword("Nolan"));
         System.out.println("Nolan movie found: " + nolan);
 
-        sortByAttribute(movies, "duration", false);
+        sortByAttribute(movies, "duration", "desc");
         System.out.println("Movies sorted by title ascending:");
         for (Movie m : movies) {
             System.out.println(m.title + " - " + m.duration);
         }
     }
 
-    public static List<Movie> sortByAttribute(List<Movie> items, String attribute, boolean ascending) {
+    public static List<Movie> sortByAttribute(List<Movie> items, String attribute, String sortOrder) {
         items.sort((a, b) -> {
             int comparison = 0;
             switch (attribute.toLowerCase()) {
@@ -45,7 +45,7 @@ public class MoviesSearch {
                 default:
                     throw new IllegalArgumentException("Unknown attribute: " + attribute);
             }
-            return ascending ? comparison : -comparison;
+            return sortOrder.equalsIgnoreCase("asc") ? comparison : -comparison;
         });
         return items;
     }
